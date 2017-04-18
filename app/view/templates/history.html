@@ -1,0 +1,7 @@
+<h1 class="jumbotron text-center">{{title}}</h1>
+<hr>
+<ul class="list-group" data-ng-repeat="question in questions">
+	<li class="list-group-item"><a href="show/{{question.id}}">{{question.question}}</a>
+		<span class="badge">diffculty:{{question.difficulty}}</span>
+	</li>
+</ul>

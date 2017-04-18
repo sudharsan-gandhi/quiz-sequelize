@@ -1,0 +1,17 @@
+<h1 class="jumbotron text-center">{{title}}</h1>
+<div class="container">
+
+	<div ng-if="error!=null" class="alert alert-danger text-center ">{{error}}</div>
+	<div class="form-group" >
+		<label for="email">Email Id</label>
+		<input type="email" name="email" id="email" ng-model="user.email" class="form-control" required>
+	</div>
+	<div class="form-group">
+		<label for="password">Password</label>
+		<input type="password" name="password" id="password" ng-model="user.password" class="form-control" required>
+	</div>
+	<div class="btn-group btn-group-justified">
+		<a class="btn btn-primary" ng-click='submitForm()'>Login</a>
+		<a class="btn btn-secondary" ui-sref="signUp">new user?</a>
+	</div>
+</div>

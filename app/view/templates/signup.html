@@ -1,0 +1,47 @@
+<h1 class="jumbotron text-center">{{title}}</h1>
+<div class="container">
+	<div ng-if="error!=null" class="alert alert-danger text-center ">{{error}}</div>
+<div class="form-group">
+	<label for="fullname">Full Name</label>
+	<input type="text" name="" ng-model="user.fullname" class="form-control" required>
+</div>
+<div class="form-group">
+	<label for="email">Email</label>
+	<input type="email" name="" ng-model="user.email" class="form-control" required>
+</div>
+<div class="form-group">
+	<label for="display_name">Display Name</label>
+	<input type="text" name="display_name" ng-model="user.display_name" class="form-control" required>
+</div>
+<div class="form-group">
+	<label for="password">Password</label>
+	<input type="password" name="password" id="password" ng-model="user.password" class="form-control" required>
+</div>
+<div class="form-group">
+	<label for="cpassword">Confirm Password</label>
+	<input type="password" name="cpassword" id="cpassword" class="form-control" required>
+</div>
+<div class="row">
+		<div class="col-md-6">
+			<span class="input-group-addon">		
+				<label>Teacher</label>
+			</span>
+			<span class="input-group-addon primary">
+				<input type='radio' id="role" name="role" ng-model="user.role" ng-value="'teacher'" required>
+			</span>
+		</div>
+		<div class="col-md-6">
+			<span class="input-group-addon">		
+				<label>Student</label>
+			</span>
+			<span class="input-group-addon">
+				<input type='radio' id="role" name="role" ng-model="user.role" ng-value="'student'" required>
+			</span>
+		</div>
+</div>
+<br>
+<div class="btn-group btn-group-justified">
+	<a class="btn btn-lg btn-primary" ng-click="signup()">Submit</a>
+	<a class="btn btn-lg btn-danger" ui-sref="view">Already a User?</a>	
+</div>
+</div>
