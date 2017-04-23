@@ -28,5 +28,8 @@ services
 			}
 		});
 	})
+	.factory('Reset',function($resource,$stateParams){
+		return $resource('/reset/:id',{id:$stateParams.id});
+	})
 
 

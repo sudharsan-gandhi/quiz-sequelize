@@ -195,7 +195,7 @@ var express	=	require('express'),
 						res.status(401).send({err:err});
 				});
 			}else{
-				res.status(401).send({err:'error when parsing json array'});
+				res.status(200).send({message:'reset'});
 			}
 		}
 		,5000);
@@ -247,48 +247,49 @@ var express	=	require('express'),
 			res.status('401').send({error:err});
 		})
 	})
-
-	function resetScore(id,previous_core,current_score){
-		checkHighScore(score.userId,score.current_score);
+//reset game
+	app.get('/reset/:id',function(req,res){
+		Score.findOne({where:{userId:req.params.id}})
+			.then(function(score){
+				console.log(JSON.stringify(score));
+				var check=resetScore(score.id,score.previous_core,score.current_score,score.high_score);
+				console.log("check"+check);
+				if(check){
+					res.json({message:"success"});
+				}else{
+					res.json({message:"retry"});
+				}
+			})
+			.catch(function(err){
+				res.json({err:err});
+			});
+	});
+	function resetScore(id,previous_core,current_score,high_score){
+		console.log("resetScore="+high_score);
+		if(current_score>high_score){
+			high_score=current_score;
+		}
+		console.log("after="+high_score);
 		Score.update({
-			current_level:1,
-			current_score:0,
-			previous_core: previous_core,
+			current_level:'1',
+			current_score:'0',
+			previous_core: current_score,
+			high_score:high_score
+		},{
 			where:{
-				userId:req.params.id
+				userId:id
 			}
 		}).then(function(score){
+			console.log("updated"+JSON.stringify(score));
 			return true;
 			}
 		).catch(function(err){
+			console.log(JSON.stringify(err));
 			return false;
 		});	
 		return true;
 	};
-	function checkHighScore(id,current_score){
-		Score.findOne({
-			attributes:[current_score,high_score],
-			where:{
-				id:id
-			}
-		}).then(function(score){
-			if(score.high_score<current_score){
-				Score.update({
-					high_score:current_score,
-					where:{
-						id:score.id
-					}
-				}).then(function(questions){
-					console.log('questions'+questions);
 
-				}).catch(function(err){
-					res.status('401').send({error:err});
-				})
-			}
-		}).catch(function(err){
-			res.status('401').send({error:err});
-		})
-	}
 //use res.end() for sending a error manually
 //server settings
 	app.listen('3000',function(error){

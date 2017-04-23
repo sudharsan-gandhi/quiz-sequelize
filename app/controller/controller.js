@@ -102,7 +102,7 @@ var controller=angular.module('app.controller',[])
 				$location.path('/test/'+$scope.user.id);
 			}
 		})
-		.controller('testController',function($scope,Questions,Level,Score,$location,$stateParams,$timeout){
+		.controller('testController',function($scope,Questions,Level,Score,$location,$stateParams,$timeout,Reset){
 			$scope.title="Level";
 			console.log("yes");
 			$scope.answer=new Level();
@@ -131,7 +131,19 @@ var controller=angular.module('app.controller',[])
 				Level.create($scope.answer,function(success){
 					if(success.message=="success"){
 						getQuestions();
+					}else(success.message=="reset"){
+						window.alert("game over");
+						resetGame();
 					}
-				},function(err){console.log(err)});
+				},function(err){
+					console.log(err);
+				});
 			};
+			var resetGame=function(){
+				Reset.get({id:$stateParams.id},function(success){
+					console.log(success)
+				},function(err){
+					console.log(err)
+				});
+			}
 		})
