@@ -4,7 +4,9 @@ var express	=	require('express'),
 	parser	=	require('body-parser'),
 	mysql	=	require('mysql'),
 	Sequelize	= require('sequelize'),
-	qnCount	=	4;
+	qnCount	=	4,
+	clearCount= 2,
+	Promise =require('bluebird'),
 	sequelize	= new Sequelize('quiz_sails','root','123456',{
 							host: '127.0.0.1',
 							dialect: 'mysql',
@@ -149,6 +151,55 @@ var express	=	require('express'),
 			res.status('401').send({error:err});
 		});
 	})
+//algorithm to check answer and change level
+	app.post('/level/:id',function(req,res){
+		var answerCount=0;
+		var id=req.params.id;
+		// var chainer= new Sequelize.Utils.QueryChainer;
+		questions=req.body;
+		questions.forEach(function(question){
+			Questions.findOne({where:{id:question.id,answer:question.answer}}).then(function(success){
+				if(success!=null)
+					answerCount++;
+				console.log("for"+answerCount)
+			})
+		});
+		console.log("answerCount=="+answerCount);
+		
+		setTimeout(function() {
+			console.log("answerList="+answerCount);
+			if(answerCount>clearCount){
+				Score.findOne({
+					where:{
+							userId:id
+						}
+				}).then(function(score){
+					score.current_score=score.current_score+answerCount;
+					score.current_level=score.current_level++;
+					console.log("score after update="+JSON.stringify(score));
+						Score.update({
+							current_score:score.current_score,
+							current_level:score.current_level
+						},{
+							where:{
+								userId:id
+							}
+						})
+						.then(function(score){
+							res.json({message:'success'});
+						}).catch(function(err){
+							res.status(401).send({err:'error when updating score'});
+						});
+				}).catch(function(err){
+						console.log(JSON.stringify(err));
+						res.status(401).send({err:err});
+				});
+			}else{
+				res.status(401).send({err:'error when parsing json array'});
+			}
+		}
+		,5000);
+	});
 
 
 //algorithm for getting questions

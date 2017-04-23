@@ -12,6 +12,7 @@
     "angular": "^1.6.3",
     "angular-resource": "^1.6.4",
     "angular-ui-router": "^0.4.2",
+    "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "bootstrap": "^3.3.7",
     "bootstrap-toggle": "^2.2.2",

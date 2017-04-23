@@ -102,12 +102,36 @@ var controller=angular.module('app.controller',[])
 				$location.path('/test/'+$scope.user.id);
 			}
 		})
-		.controller('testController',function($scope,Questions,$location,$stateParams){
+		.controller('testController',function($scope,Questions,Level,Score,$location,$stateParams,$timeout){
 			$scope.title="Level";
 			console.log("yes");
-			Questions.query({id:$stateParams.id},function(success){
-				$scope.questions=success;
-			},function(err){
-				$scope.error=err;
-			})
+			$scope.answer=new Level();
+			var getQuestions=function(){
+										Questions.query({id:$stateParams.id},function(success){
+											$timeout(function(){
+												console.log(success);
+												$scope.questions=success;	
+											},3000)
+											
+										},function(err){
+											$scope.error=err;
+										});
+			};
+			getQuestions();
+			$scope.cancel=function(){
+				Score.delete({id:$stateParams.id},function(success){
+					$location.path(success.path).replace;
+				},function(err){
+					$scope.error=err;
+				});
+			};
+			$scope.level=function(){
+				console.log($scope.questions);
+				$scope.answer=$scope.questions;
+				Level.create($scope.answer,function(success){
+					if(success.message=="success"){
+						getQuestions();
+					}
+				},function(err){console.log(err)});
+			};
 		})

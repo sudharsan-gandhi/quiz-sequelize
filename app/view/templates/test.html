@@ -1,31 +1,139 @@
 <h1 class="jumbotron text-center">{{title}}</h1>
 <div ng-if="error!=null" class="alert alert-danger text-center ">{{error}}</div>
-<div class="form-group" ng-repeat="question in questions">
-<div class="panel-group">
+<!-- <div class="form-group">
+<div class="panel-group" ng-repeat="question in questions">
   <div class="panel panel-danger">
-    <div class="panel-heading" ng-model="answer.id" ng-value="{{question.id}}">{{question.question}}</div>
+    <div class="panel-heading" ng-value="{{question.id}}">{{question.question}}</div>
   </div>
   <div class="panel panel-default">
     <div class="panel-body">
     	<span class="col-lg-3">
 		<label>{{question.answer1}}</label>	
-		<input type="radio" name="answer" ng-model="answer.answer" ng-value="question.answer1">
+		<input type="radio" name="answer{{question.id}}" ng-model="question.answer" ng-value="{{question.answer1}}">
 		</span>
 		<span class="col-lg-3">
 		<label>{{question.answer2}}</label>	
-		<input type="radio" name="answer" ng-model="answer.answer" ng-value="question.answer2">
+		<input type="radio" name="answer{{question.id}}" ng-model="question.answer" ng-value="{{question.answer2}}">
 		</span>
 		<span class="col-lg-3">
 		<label>{{question.answer3}}</label>	
-		<input type="radio" name="answer" ng-model="answer.answer" ng-value="question.answer3">
+		<input type="radio" name="answer{{question.id}}" ng-model="question.answer" ng-value="{{question.answer3}}">
 		</span>
 		<span class="col-lg-3">
 		<label>{{question.answer4}}</label>	
-		<input type="radio" name="answer" ng-model="answer.answer" ng-value="question.answer4">
+		<input type="radio" name="answer{{question.id}}" ng-model="question.answer" ng-value="{{question.answer4}}">
 		</span>
     </div>
   </div>
 </div>
 
-
-
+</div>
+ -->
+<form>
+<div class="form-group">
+	<div class="panel-group">
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+				<label>{{questions[0].question}}</label>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<span class="col-lg-3">
+				<label>{{questions[0].answer1}}</label>
+				<input type="radio" name="answer.answer0" ng-model="questions[0].answer" ng-value="questions[0].answer1">
+			</span>
+			<span class="col-lg-3">
+				<label>{{questions[0].answer2}}</label>
+				<input type="radio" name="answer.answer0" ng-model="questions[0].answer" ng-value="questions[0].answer2">
+			</span>
+			<span class="col-lg-3">
+				<label>{{questions[0].answer3}}</label>
+				<input type="radio" name="answer.answer0" ng-model="questions[0].answer" ng-value="questions[0].answer3">
+			</span>
+			<span class="col-lg-3">
+				<label>{{questions[0].answer4}}</label>
+				<input type="radio" name="answer.answer0" ng-model="questions[0].answer" ng-value="questions[0].answer4">
+			</span>
+		</div>
+	</div>
+	<div class="panel-group">
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+				<label>{{questions[1].question}}</label>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<span class="col-lg-3">
+				<label>{{questions[1].answer1}}</label>
+				<input type="radio" name="answer.answer1" ng-model="questions[1].answer" ng-value="questions[1].answer1">
+			</span>
+			<span class="col-lg-3">
+				<label>{{questions[1].answer2}}</label>
+				<input type="radio" name="answer.answer1" ng-model="questions[1].answer" ng-value="questions[1].answer2">
+			</span>
+			<span class="col-lg-3">
+				<label>{{questions[1].answer3}}</label>
+				<input type="radio" name="answer.answer1" ng-model="questions[1].answer" ng-value="questions[1].answer3">
+			</span>
+			<span class="col-lg-3">
+				<label>{{questions[1].answer4}}</label>
+				<input type="radio" name="answer.answer1" ng-model="questions[1].answer" ng-value="questions[1].answer4">
+			</span>
+		</div>
+	</div>
+	<div class="panel-group">
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+				<label>{{questions[2].question}}</label>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<span class="col-lg-3">
+				<label>{{questions[2].answer1}}</label>
+				<input type="radio" name="answer.answer2" ng-model="questions[2].answer" ng-value="questions[2].answer1">
+			</span>
+			<span class="col-lg-3">
+				<label>{{questions[2].answer2}}</label>
+				<input type="radio" name="answer.answer2" ng-model="questions[2].answer" ng-value="questions[2].answer2">
+			</span>
+			<span class="col-lg-3">
+				<label>{{questions[2].answer3}}</label>
+				<input type="radio" name="answer.answer2" ng-model="questions[2].answer" ng-value="questions[2].answer3">
+			</span>
+			<span class="col-lg-3">
+				<label>{{questions[2].answer4}}</label>
+				<input type="radio" name="answer.answer2" ng-model="questions[2].answer" ng-value="questions[2].answer4">
+			</span>
+		</div>
+	</div>
+	<div class="panel-group">
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+				<label>{{questions[3].question}}</label>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<span class="col-lg-3">
+				<label>{{questions[3].answer1}}</label>
+				<input type="radio" name="answer.answer3" ng-model="questions[3].answer" ng-value="questions[3].answer1">
+			</span>
+			<span class="col-lg-3">
+				<label>{{questions[3].answer2}}</label>
+				<input type="radio" name="answer.answer3" ng-model="questions[3].answer" ng-value="questions[3].answer2">
+			</span>
+			<span class="col-lg-3">
+				<label>{{questions[3].answer3}}</label>
+				<input type="radio" name="answer.answer3" ng-model="questions[3].answer" ng-value="questions[3].answer3">
+			</span>
+			<span class="col-lg-3">
+				<label>{{questions[3].answer4}}</label>
+				<input type="radio" name="answer.answer3" ng-model="questions[3].answer" ng-value="questions[3].answer4">
+			</span>
+		</div>
+	</div>
+</div>
+<div class="btn-group btn-group-justified">
+		<a class="btn btn-lg btn-primary" ng-click="level(answer)">Complete Level</a>
+		<a class="btn btn-lg btn-secondary" type="reset" ng-click="cancel()">Cancel Test</a>
+</div>
+</form>
