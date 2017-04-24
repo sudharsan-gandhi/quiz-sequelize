@@ -8,18 +8,18 @@ var controller=angular.module('app.controller',[])
 				$scope.user.$save(function(success){
 					$location.path(success.path).replace;
 				},function(err){
-					console.log(JSON.stringify(err.data.error));
+					// console.log(JSON.stringify(err.data.error));
 					$scope.error=err.data.error;
-					console.log(session);
+					// console.log(session);
 				})
 			};
 		})
 		.controller('authorController',function($scope,$stateParams,$location,User){
 			$scope.title="Author Dashboard";
 			User.get({id:$stateParams.id},function(success){
-				console.log("console"+JSON.stringify(success));
+				// console.log("console"+JSON.stringify(success));
 				$scope.user=success;
-				console.log("success"+success);
+				// console.log("success"+success);
 			},function(err){
 				window.alert(JSON.stringify(err));
 				$location.path(err.path).replace;
@@ -33,16 +33,16 @@ var controller=angular.module('app.controller',[])
 			$scope.title="Add Question";
 			$scope.options=[1,2,3,4,5,6,7,8,9,10];
 			$scope.addquestion=function(){
-				console.log("form"+JSON.stringify($scope.form));
+				// console.log("form"+JSON.stringify($scope.form));
 				$scope.form.$save(function(success){
 					$scope.message=null;
 					$scope.error=null;
-					console.log(success);
+					// console.log(success);
 					$scope.message=success;
 				},function(err){
 					$scope.message=null;
 					$scope.error=null;
-					console.log(err);
+					// console.log(err);
 					$scope.error=err;
 				});
 			}
@@ -54,11 +54,11 @@ var controller=angular.module('app.controller',[])
 			$scope.title="Registeration";
 			$scope.user=new UserSignUp();
 			$scope.signup=function(){
-				console.log(JSON.stringify($scope.user));
+				// console.log(JSON.stringify($scope.user));
 				$scope.user.$save(function(success){
 					 $location.path(success.path).replace;
 				},function(err){
-					console.log(err);
+					// console.log(err);
 					$scope.error=err.data.error;
 				});
 			}
@@ -91,9 +91,9 @@ var controller=angular.module('app.controller',[])
 			$scope.title="Welcome";
 			$scope.user="";
 			User.get({id:$stateParams.id},function(success){
-				console.log("console"+JSON.stringify(success));
+				// console.log("console"+JSON.stringify(success));
 				$scope.user=success;
-				console.log("success"+success);
+				// console.log("success"+success);
 			},function(err){
 				window.alert(JSON.stringify(err));
 				$location.path(err.path).replace;
@@ -102,22 +102,30 @@ var controller=angular.module('app.controller',[])
 				$location.path('/test/'+$scope.user.id);
 			}
 		})
-		.controller('testController',function($scope,Questions,Level,Score,$location,$stateParams,$timeout,Reset){
+		.controller('testController',function($scope,Questions,Level,Score,$location,$stateParams,$timeout,Reset,$location){
 			$scope.title="Level";
-			console.log("yes");
 			$scope.answer=new Level();
+			var getScore=function(){
+							Score.get({id:$stateParams.id},function(success){
+								// console.log("score fetched:"+success);
+								$scope.score=success;
+							},function(err){
+								// console.log("err"+err);
+							});
+						};
 			var getQuestions=function(){
 										Questions.query({id:$stateParams.id},function(success){
 											$timeout(function(){
-												console.log(success);
+												// console.log(success);
 												$scope.questions=success;	
-											},3000)
+											},3000);
 											
 										},function(err){
 											$scope.error=err;
 										});
 			};
 			getQuestions();
+			getScore();
 			$scope.cancel=function(){
 				Score.delete({id:$stateParams.id},function(success){
 					$location.path(success.path).replace;
@@ -126,24 +134,26 @@ var controller=angular.module('app.controller',[])
 				});
 			};
 			$scope.level=function(){
-				console.log($scope.questions);
+				// console.log($scope.questions);
 				$scope.answer=$scope.questions;
 				Level.create($scope.answer,function(success){
 					if(success.message=="success"){
 						getQuestions();
-					}else(success.message=="reset"){
+						getScore();
+					}else if(success.message=="reset"){
 						window.alert("game over");
 						resetGame();
-					}
+						$location.path('/student/'+$stateParams.id);
+					};
 				},function(err){
 					console.log(err);
 				});
 			};
 			var resetGame=function(){
 				Reset.get({id:$stateParams.id},function(success){
-					console.log(success)
+					// console.log(success);
 				},function(err){
-					console.log(err)
+					console.log(err);
 				});
 			}
 		})

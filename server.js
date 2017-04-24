@@ -175,7 +175,7 @@ var express	=	require('express'),
 						}
 				}).then(function(score){
 					score.current_score=score.current_score+answerCount;
-					score.current_level=score.current_level++;
+					score.current_level=score.current_level+1;
 					console.log("score after update="+JSON.stringify(score));
 						Score.update({
 							current_score:score.current_score,
@@ -263,6 +263,16 @@ var express	=	require('express'),
 			.catch(function(err){
 				res.json({err:err});
 			});
+	});
+//get score
+	app.get('/score/:id',function(req,res){
+		Score.findOne({where:{userId:req.params.id}})
+			.then(function(score){
+				res.json(score);
+			})
+			.catch(function(err){
+				res.status(401).send({err:err});
+			})
 	});
 	function resetScore(id,previous_core,current_score,high_score){
 		console.log("resetScore="+high_score);
