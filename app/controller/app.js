@@ -1,2 +1,2 @@
-var app = angular.module('app', ['ui.router','app.controller','app.state','app.services','ngResource']);
+var app = angular.module('app', ['ui.router','app.controller','app.state','app.services','ngResource','ngLoader']);
 

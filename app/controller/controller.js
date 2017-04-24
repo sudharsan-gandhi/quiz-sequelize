@@ -106,6 +106,9 @@ var controller=angular.module('app.controller',[])
 			$scope.title="Level";
 			$scope.answer=new Level();
 			var getScore=function(){
+							$scope.loader = true;
+							$scope.buttonDisabler=true;
+							$scope.loadText = 'getting questions...';
 							Score.get({id:$stateParams.id},function(success){
 								// console.log("score fetched:"+success);
 								$scope.score=success;
@@ -114,46 +117,60 @@ var controller=angular.module('app.controller',[])
 							});
 						};
 			var getQuestions=function(){
+										$scope.loader = true;
+										$scope.buttonDisabler=true;
+										$scope.loadText = 'getting questions...';
 										Questions.query({id:$stateParams.id},function(success){
-											$timeout(function(){
-												// console.log(success);
-												$scope.questions=success;	
-											},3000);
-											
+												$scope.questions=success;												
 										},function(err){
 											$scope.error=err;
 										});
 			};
 			getQuestions();
 			getScore();
+			$scope.loader = false;
+			$scope.buttonDisabler=false;
 			$scope.cancel=function(){
-				Score.delete({id:$stateParams.id},function(success){
-					$location.path(success.path).replace;
-				},function(err){
-					$scope.error=err;
-				});
+				var check=window.confirm("are your sure?");
+				if(check){
+					resetGame();
+					$location.path('/student/'+$stateParams.id);
+				}
 			};
 			$scope.level=function(){
 				// console.log($scope.questions);
 				$scope.answer=$scope.questions;
+				$scope.loader = true;
+				$scope.buttonDisabler=true;
+				$scope.loadText = 'checking answers...';
 				Level.create($scope.answer,function(success){
 					if(success.message=="success"){
 						getQuestions();
 						getScore();
+						$scope.loader = false;
+						$scope.buttonDisabler=false;
 					}else if(success.message=="reset"){
-						window.alert("game over");
+						window.alert("game over!!!");
 						resetGame();
 						$location.path('/student/'+$stateParams.id);
 					};
 				},function(err){
 					console.log(err);
-				});
+				})					
+
+				
+				
 			};
 			var resetGame=function(){
+				$scope.loader = true;
+				$scope.buttonDisabler=true;
+				$scope.loadText = 'reseting game...';
 				Reset.get({id:$stateParams.id},function(success){
 					// console.log(success);
 				},function(err){
 					console.log(err);
 				});
+				$scope.loader = false;
+				$scope.buttonDisabler=false;
 			}
 		})

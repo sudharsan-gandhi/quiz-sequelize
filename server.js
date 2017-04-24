@@ -76,6 +76,7 @@ var express	=	require('express'),
 	app.use('/bootstrap',express.static(_dirname='./node_modules/bootstrap/dist'));
 	app.use('/bootstrap-toggle',express.static(_dirname='./node_modules/bootstrap-toggle'));
 	app.use('/static',express.static(_dirname='./app/controller'));
+	app.use('/require',express.static(_dirname='./app/static'));
 	app.use('/view',express.static(_dirname='./app/view'));
 
 

@@ -29,6 +29,12 @@
 
 </div>
  -->
+ <loader
+	working=loader
+	disable-background="true"
+	message=loadText
+	template="9">
+</loader>
  <nav class="navbar navbar-inverse">
 	<ul class="nav navbar-nav">
 		<li><a>Previous Score<span class="badge">{{score.previous_core}}</span></a></li>
@@ -140,7 +146,7 @@
 	</div>
 </div>
 <div class="btn-group btn-group-justified">
-		<a class="btn btn-lg btn-primary" ng-click="level(answer)">Complete Level</a>
-		<a class="btn btn-lg btn-secondary" type="reset" ng-click="cancel()">Cancel Test</a>
+		<a class="btn btn-lg btn-primary" ng-click="level(answer)" ng-disabled="buttonDisabler">Complete Level</a>
+		<a class="btn btn-lg btn-secondary" type="reset" ng-click="cancel()" ng-disabled="buttonDisabler">Cancel Test</a>
 </div>
 </form>
