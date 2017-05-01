@@ -253,7 +253,7 @@ var express	=	require('express'),
 		Score.findOne({where:{userId:req.params.id}})
 			.then(function(score){
 				console.log(JSON.stringify(score));
-				var check=resetScore(score.id,score.previous_core,score.current_score,score.high_score);
+				var check=resetScore(score.id,score.previous_core,score.current_score,score.high_score,score.current_level);
 				console.log("check"+check);
 				if(check){
 					res.json({message:"success"});
@@ -275,14 +275,16 @@ var express	=	require('express'),
 				res.status(401).send({err:err});
 			})
 	});
-	function resetScore(id,previous_core,current_score,high_score){
+	function resetScore(id,previous_core,current_score,high_score,current_level){
 		console.log("resetScore="+high_score);
 		if(current_score>high_score){
 			high_score=current_score;
 		}
+		//lowering one level down
+		current_level=current_level-1;
 		console.log("after="+high_score);
 		Score.update({
-			current_level:'1',
+			current_level:current_level,
 			current_score:'0',
 			previous_core: current_score,
 			high_score:high_score
