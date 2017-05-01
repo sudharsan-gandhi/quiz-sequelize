@@ -281,7 +281,9 @@ var express	=	require('express'),
 			high_score=current_score;
 		}
 		//lowering one level down
-		current_level=current_level-1;
+		if(current_level!=1){
+			current_level=current_level-1;
+		}
 		console.log("after="+high_score);
 		Score.update({
 			current_level:current_level,
