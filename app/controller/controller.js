@@ -153,7 +153,7 @@ var controller=angular.module('app.controller',[])
 						window.alert("game over!!!");
 						resetGame();
 						$location.path('/student/'+$stateParams.id);
-					}else if(success.message=="reset"){
+					}else if(success.message=="maxUp"){
 						var check=window.alert("reached maximum level. Are you sure want to continue on same level again?");
 						if(check){
 							getQuestions();

@@ -6,6 +6,7 @@ var express	=	require('express'),
 	Sequelize	= require('sequelize'),
 	qnCount	=	4,
 	clearCount= 2,
+	max_level= 5,
 	Promise =require('bluebird'),
 	sequelize	= new Sequelize('quiz_sails','root','123456',{
 							host: '127.0.0.1',
@@ -176,7 +177,9 @@ var express	=	require('express'),
 						}
 				}).then(function(score){
 					score.current_score=score.current_score+answerCount;
-					score.current_level=score.current_level+1;
+					if(score.current_level!=max_level){
+						score.current_level=score.current_level+1;
+					}
 					console.log("score after update="+JSON.stringify(score));
 						Score.update({
 							current_score:score.current_score,
@@ -187,6 +190,9 @@ var express	=	require('express'),
 							}
 						})
 						.then(function(score){
+							if(score.current_level==max_level){
+								res.json({message:'maxUp'})							
+							}
 							res.json({message:'success'});
 						}).catch(function(err){
 							res.status(401).send({err:'error when updating score'});
