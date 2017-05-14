@@ -153,6 +153,16 @@ var controller=angular.module('app.controller',[])
 						window.alert("game over!!!");
 						resetGame();
 						$location.path('/student/'+$stateParams.id);
+					}else if(success.message=="reset"){
+						var check=window.alert("reached maximum level. Are you sure want to continue on same level again?");
+						if(check){
+							getQuestions();
+							getScore();
+							$scope.loader = false;
+							$scope.buttonDisabler=false;
+						}else{
+							$location.path('/student/'+$stateParams.id);
+						}
 					};
 				},function(err){
 					console.log(err);
